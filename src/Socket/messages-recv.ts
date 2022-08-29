@@ -294,6 +294,11 @@ export const makeMessagesRecvSocket = (config: SocketConfig) => {
 			const msg = msgs[i]
 			if(msg) {
 				updateSendMessageAgainCount(ids[i], participant)
+				
+				//Patch to fix "Messages waiting..."
+				const mapId = key.remoteJid + ids[i]
+                                await delay(500 * msgRetryMap[mapId])
+				
 				const msgRelayOpts: MessageRelayOptions = { messageId: ids[i] }
 
 				if(sendToAll) {
